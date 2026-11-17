@@ -11,126 +11,328 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --bg1: #667eea;
+      --bg2: #764ba2;
+      --card: #ffffff;
+      --card-header1: #5a67d8;
+      --card-header2: #6b46c1;
+      --text-main: #2d3748;
+      --text-sub: #a0aec0;
+      --border: #e2e8f0;
+      --hover-bg: #f7fafc;
+      --accent: #6b46c1;
+      --accent-dark: #553c9a;
+      --danger: #e53e3e;
+      --danger-bg: #fed7d7;
+      --high: #e53e3e;
+      --mid: #ed8936;
+      --low: #38a169;
+    }
+
+    body.dark {
+      --bg1: #1a202c;
+      --bg2: #2d3748;
+      --card: #2a3042;
+      --card-header1: #4a5568;
+      --card-header2: #553c9a;
+      --text-main: #e2e8f0;
+      --text-sub: #718096;
+      --border: #4a5568;
+      --hover-bg: #323a50;
+      --danger-bg: #4a2030;
+    }
+
     body {
       font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: 60px 16px;
+      padding: 40px 16px;
+      transition: background 0.3s;
     }
 
     .app {
-      background: #fff;
+      background: var(--card);
       width: 100%;
-      max-width: 480px;
+      max-width: 760px;
       border-radius: 16px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
       overflow: hidden;
+      transition: background 0.3s;
     }
 
     .header {
-      background: linear-gradient(135deg, #5a67d8, #6b46c1);
+      background: linear-gradient(135deg, var(--card-header1), var(--card-header2));
       color: #fff;
-      padding: 24px 28px;
+      padding: 28px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
     }
 
     .header h1 {
-      font-size: 22px;
+      font-size: 28px;
       font-weight: 600;
     }
 
-    .header .stats {
-      margin-top: 6px;
+    .header .date {
+      margin-top: 8px;
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    .theme-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 4px 8px;
+      transition: background 0.2s;
+    }
+
+    .theme-btn:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .progress-wrap {
+      padding: 18px 32px 0;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
       font-size: 13px;
-      opacity: 0.85;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #68d391, #38a169);
+      border-radius: 4px;
+      transition: width 0.4s ease;
     }
 
     .input-row {
       display: flex;
       gap: 10px;
-      padding: 20px 24px 8px;
+      padding: 18px 32px 8px;
     }
 
-    .input-row input {
+    .input-row input[type="text"] {
       flex: 1;
-      border: 2px solid #e2e8f0;
+      border: 2px solid var(--border);
       border-radius: 10px;
-      padding: 10px 14px;
-      font-size: 15px;
+      padding: 12px 16px;
+      font-size: 16px;
       outline: none;
       transition: border-color 0.2s;
+      background: transparent;
+      color: var(--text-main);
     }
 
-    .input-row input:focus {
-      border-color: #6b46c1;
+    .input-row input[type="text"]:focus {
+      border-color: var(--accent);
+    }
+
+    .input-row input[type="date"] {
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 13px;
+      outline: none;
+      background: transparent;
+      color: var(--text-sub);
+      cursor: pointer;
+    }
+
+    .due-tag {
+      font-size: 12px;
+      color: var(--text-sub);
+      padding: 3px 8px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .due-tag.today {
+      color: #ed8936;
+      border-color: #ed8936;
+      font-weight: 600;
+    }
+
+    .due-tag.overdue {
+      color: #e53e3e;
+      border-color: #e53e3e;
+      font-weight: 600;
     }
 
     .input-row button {
-      background: #6b46c1;
+      background: var(--accent);
       color: #fff;
       border: none;
       border-radius: 10px;
-      padding: 0 20px;
-      font-size: 15px;
+      padding: 0 26px;
+      font-size: 16px;
       cursor: pointer;
       transition: background 0.2s;
     }
 
     .input-row button:hover {
-      background: #553c9a;
+      background: var(--accent-dark);
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 12px 32px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--text-sub);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .priority-select {
+      margin-left: auto;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 5px 10px;
+      font-size: 13px;
+      background: transparent;
+      color: var(--text-main);
+      cursor: pointer;
+      outline: none;
+    }
+
+    body.dark .priority-select option {
+      background: var(--card);
+      color: var(--text-main);
+    }
+
+    .clear-done {
+      border: none;
+      background: transparent;
+      color: var(--text-sub);
+      font-size: 13px;
+      cursor: pointer;
+      padding: 5px 8px;
+      border-radius: 6px;
+      transition: color 0.2s;
+    }
+
+    .clear-done:hover {
+      color: var(--danger);
     }
 
     ul {
       list-style: none;
-      padding: 8px 16px 16px;
+      padding: 4px 24px 16px;
+      max-height: 520px;
+      overflow-y: auto;
+    }
+
+    ul::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ul::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
     }
 
     li {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 12px 10px;
+      padding: 14px 12px;
       border-radius: 10px;
       animation: fadeIn 0.25s ease;
+      border-left: 4px solid transparent;
     }
 
     li:hover {
-      background: #f7fafc;
+      background: var(--hover-bg);
     }
+
+    li.prio-high { border-left-color: var(--high); }
+    li.prio-mid { border-left-color: var(--mid); }
+    li.prio-low { border-left-color: var(--low); }
 
     li input[type="checkbox"] {
       width: 20px;
       height: 20px;
-      accent-color: #6b46c1;
+      accent-color: var(--accent);
       cursor: pointer;
       flex-shrink: 0;
     }
 
     li .text {
       flex: 1;
-      font-size: 15px;
-      color: #2d3748;
+      font-size: 17px;
+      color: var(--text-main);
       word-break: break-all;
       cursor: pointer;
+      transition: color 0.2s;
     }
+
+    li .prio-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .prio-tag.high { background: var(--high); }
+    .prio-tag.mid { background: var(--mid); }
+    .prio-tag.low { background: var(--low); }
 
     li.done .text {
       text-decoration: line-through;
-      color: #a0aec0;
+      color: var(--text-sub);
     }
 
     li .del {
       border: none;
       background: transparent;
-      color: #e53e3e;
+      color: var(--danger);
       font-size: 18px;
       cursor: pointer;
       padding: 4px 8px;
       border-radius: 6px;
       opacity: 0;
       transition: opacity 0.15s, background 0.15s;
+      flex-shrink: 0;
     }
 
     li:hover .del {
@@ -138,12 +340,12 @@
     }
 
     li .del:hover {
-      background: #fed7d7;
+      background: var(--danger-bg);
     }
 
     .empty {
       text-align: center;
-      color: #a0aec0;
+      color: var(--text-sub);
       padding: 30px 0 40px;
       font-size: 14px;
     }
@@ -163,13 +365,42 @@
 <body>
   <div class="app">
     <div class="header">
-      <h1>📝 待办清单</h1>
-      <div class="stats" id="stats">共 0 项</div>
+      <div>
+        <h1>📝 待办清单</h1>
+        <div class="date" id="todayDate"></div>
+      </div>
+      <button class="theme-btn" id="themeBtn" title="切换主题">🌙</button>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="stats">共 0 项</span>
+        <span id="percent">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     </div>
 
     <div class="input-row">
       <input type="text" id="todoInput" placeholder="输入待办事项，按回车添加…" maxlength="100" />
+      <input type="date" id="dueDate" title="截止日期（可选）" />
       <button id="addBtn">添加</button>
+    </div>
+
+    <div class="toolbar">
+      <button class="filter-btn active" data-filter="all">全部</button>
+      <button class="filter-btn" data-filter="active">未完成</button>
+      <button class="filter-btn" data-filter="done">已完成</button>
+      <select class="priority-select" id="sortSelect" title="排序方式">
+        <option value="default">排序：添加顺序</option>
+        <option value="due">按截止日期</option>
+        <option value="prio">按优先级</option>
+      </select>
+      <select class="priority-select" id="prioSelect" title="新事项优先级">
+        <option value="mid">优先级：中</option>
+        <option value="high">优先级：高</option>
+        <option value="low">优先级：低</option>
+      </select>
+      <button class="clear-done" id="clearDone">清除已完成</button>
     </div>
 
     <ul id="todoList"></ul>
@@ -178,18 +409,54 @@
 
   <script>
     const STORAGE_KEY = "todos";
+    const THEME_KEY = "theme";
     let todos = [];
     try {
       todos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
     } catch (e) {
       todos = [];
     }
+    let filter = "all";
 
     const input = document.getElementById("todoInput");
     const addBtn = document.getElementById("addBtn");
     const list = document.getElementById("todoList");
     const emptyHint = document.getElementById("emptyHint");
     const stats = document.getElementById("stats");
+    const percent = document.getElementById("percent");
+    const progressFill = document.getElementById("progressFill");
+    const prioSelect = document.getElementById("prioSelect");
+    const sortSelect = document.getElementById("sortSelect");
+    const dueDateInput = document.getElementById("dueDate");
+    const clearDoneBtn = document.getElementById("clearDone");
+    const themeBtn = document.getElementById("themeBtn");
+    const todayDate = document.getElementById("todayDate");
+
+    const PRIO_TEXT = { high: "高", mid: "中", low: "低" };
+
+    function todayStr() {
+      const t = new Date();
+      const m = String(t.getMonth() + 1).padStart(2, "0");
+      const day = String(t.getDate()).padStart(2, "0");
+      return `${t.getFullYear()}-${m}-${day}`;
+    }
+
+    // 日期显示
+    const d = new Date();
+    const weekDays = ["日", "一", "二", "三", "四", "五", "六"];
+    todayDate.textContent =
+      `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日 星期${weekDays[d.getDay()]}`;
+
+    // 深色模式
+    function applyTheme(dark) {
+      document.body.classList.toggle("dark", dark);
+      themeBtn.textContent = dark ? "☀️" : "🌙";
+      localStorage.setItem(THEME_KEY, dark ? "dark" : "light");
+    }
+    applyTheme(localStorage.getItem(THEME_KEY) === "dark");
+    themeBtn.addEventListener("click", () => {
+      applyTheme(!document.body.classList.contains("dark"));
+    });
 
     function save() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
@@ -197,15 +464,62 @@
 
     function updateStats() {
       const done = todos.filter((t) => t.done).length;
-      stats.textContent = `共 ${todos.length} 项，已完成 ${done} 项`;
-      emptyHint.style.display = todos.length === 0 ? "block" : "none";
+      const total = todos.length;
+      stats.textContent = `共 ${total} 项，已完成 ${done} 项`;
+      const p = total === 0 ? 0 : Math.round((done / total) * 100);
+      percent.textContent = p + "%";
+      progressFill.style.width = p + "%";
+      emptyHint.style.display =
+        total === 0 ? "block" : "none";
+    }
+
+    const PRIO_ORDER = { high: 0, mid: 1, low: 2 };
+
+    function sortTodos(arr) {
+      const mode = sortSelect.value;
+      const copy = arr.slice();
+      if (mode === "due") {
+        copy.sort((a, b) => {
+          if (a.done !== b.done) return a.done - b.done;
+          const ad = a.due || "9999-99-99";
+          const bd = b.due || "9999-99-99";
+          return ad < bd ? -1 : ad > bd ? 1 : 0;
+        });
+      } else if (mode === "prio") {
+        copy.sort((a, b) => {
+          if (a.done !== b.done) return a.done - b.done;
+          return (
+            (PRIO_ORDER[a.prio] || 1) - (PRIO_ORDER[b.prio] || 1)
+          );
+        });
+      }
+      return copy;
     }
 
     function render() {
       list.innerHTML = "";
-      todos.forEach((todo, index) => {
+      const visible = sortTodos(
+        todos.filter((t) =>
+          filter === "all" ? true : filter === "done" ? t.done : !t.done
+        )
+      );
+
+      if (visible.length === 0 && todos.length > 0) {
+        const li = document.createElement("li");
+        const span = document.createElement("span");
+        span.className = "text";
+        span.textContent =
+          filter === "done" ? "还没有已完成的事项" : "太棒了，全部完成了！🎉";
+        li.appendChild(span);
+        list.appendChild(li);
+      }
+
+      visible.forEach((todo) => {
+        const index = todos.indexOf(todo);
         const li = document.createElement("li");
         if (todo.done) li.classList.add("done");
+        const prio = todo.prio || "mid";
+        li.classList.add("prio-" + prio);
 
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
@@ -225,6 +539,50 @@
           render();
         });
 
+        const tag = document.createElement("span");
+        tag.className = "prio-tag " + prio;
+        tag.textContent = PRIO_TEXT[prio];
+        tag.title = "点击切换优先级";
+        tag.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const order = { mid: "low", low: "high", high: "mid" };
+          todos[index].prio = order[todos[index].prio || "mid"];
+          save();
+          render();
+        });
+
+        const dueTag = document.createElement("span");
+        dueTag.className = "due-tag";
+        const today = todayStr();
+        if (todo.due) {
+          dueTag.textContent = "⏰ " + todo.due;
+          if (!todo.done && todo.due < today) dueTag.classList.add("overdue");
+          else if (!todo.done && todo.due === today) dueTag.classList.add("today");
+          dueTag.title = "点击修改截止日期（格式 YYYY-MM-DD，留空清除）";
+          dueTag.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const val = prompt("修改截止日期（格式 YYYY-MM-DD，留空清除）：", todo.due);
+            if (val === null) return;
+            const v = val.trim();
+            if (!v) delete todos[index].due;
+            else if (/^\d{4}-\d{2}-\d{2}$/.test(v)) todos[index].due = v;
+            save();
+            render();
+          });
+        } else {
+          dueTag.textContent = "📅 无日期";
+          dueTag.title = "点击设置截止日期（格式 YYYY-MM-DD）";
+          dueTag.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const val = prompt("设置截止日期（格式 YYYY-MM-DD）：", today);
+            if (val === null) return;
+            const v = val.trim();
+            if (v && /^\d{4}-\d{2}-\d{2}$/.test(v)) todos[index].due = v;
+            save();
+            render();
+          });
+        }
+
         const del = document.createElement("button");
         del.className = "del";
         del.textContent = "✕";
@@ -236,7 +594,7 @@
           render();
         });
 
-        li.append(checkbox, span, del);
+        li.append(checkbox, span, tag, dueTag, del);
         list.appendChild(li);
       });
       updateStats();
@@ -245,8 +603,11 @@
     function addTodo() {
       const text = input.value.trim();
       if (!text) return;
-      todos.unshift({ text, done: false });
+      const todo = { text, done: false, prio: prioSelect.value };
+      if (dueDateInput.value) todo.due = dueDateInput.value;
+      todos.unshift(todo);
       input.value = "";
+      dueDateInput.value = "";
       save();
       render();
       input.focus();
@@ -255,6 +616,28 @@
     addBtn.addEventListener("click", addTodo);
     input.addEventListener("keydown", (e) => {
       if (e.key === "Enter") addTodo();
+    });
+    dueDateInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") addTodo();
+    });
+
+    document.querySelectorAll(".filter-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        filter = btn.dataset.filter;
+        render();
+      });
+    });
+
+    sortSelect.addEventListener("change", render);
+
+    clearDoneBtn.addEventListener("click", () => {
+      const doneCount = todos.filter((t) => t.done).length;
+      if (doneCount === 0) return;
+      todos = todos.filter((t) => !t.done);
+      save();
+      render();
     });
 
     render();
